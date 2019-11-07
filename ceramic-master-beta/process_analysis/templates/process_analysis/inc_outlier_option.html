@@ -1,0 +1,74 @@
+<div class="row">
+    <form method="post" action="{% url 'process_analysis:outlier_batch_ajax' %}" id="outlier_batch_ajax">
+        {% csrf_token %}
+        <div class="col-lg-2 col-sm-4">
+            <label for="factory">Factory:</label>
+            <select id="factory" name="factory" class="form-control outlier_batch_opt" required>
+                {% for opt in factories %}
+                    <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="line">Line:</label>
+            <select id="line" name="line" class="form-control outlier_batch_opt" required>
+                {% for opt in lines %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Process:</label>
+            <select id="process" name="process" class="form-control outlier_batch_opt" required>
+                {% for opt in processes %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Factor:</label>
+            <select id="factor" name="factor" class="form-control outlier_batch_opt" required>
+                {% for opt in factor_names %}
+                <option value="{{ forloop.counter0 }}={{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="start_dt">Start DT:</label>
+            <fieldset>
+                <div class="control-group">
+                    <div class="controls">
+                    <div class="col-md-12 xdisplay_inputx form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="start_dt" name="start_dt" placeholder="Start DT" aria-describedby="inputSuccess2Status2" value="2018-01-01">
+                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                        <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                    </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="end_dt">End DT:</label>
+            <fieldset>
+                <div class="control-group">
+                    <div class="controls">
+                    <div class="col-md-12 xdisplay_inputx form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="end_dt" name="end_dt" placeholder="End DT" aria-describedby="inputSuccess2Status2" value="2018-12-31">
+                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                        <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                    </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+
+</div>
+
+
+

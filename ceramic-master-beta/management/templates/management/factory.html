@@ -1,0 +1,131 @@
+{% extends "gui/layout/base_site.html" %}
+{% load static %}
+
+{% block title %} 공장관리 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static 'gui/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gui/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'gui/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'gui/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'gui/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'management/css/factory.css' %}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>공장관리</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <a href="{% url 'factory_add' %}" class="btn btn-success">공장추가</a>
+                            <table id="datatable-buttons"
+                                   class="table table-striped table-bordered dt-responsive nowrap"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>공장이름</th>
+                                    <th>공장별명</th>
+                                    <th>주소</th>
+                                    <th>가동시작일</th>
+                                    <th>가동종료일</th>
+                                    <th>설명</th>
+                                    <th class="unsortable" disabled>수정</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>세기원 이천공장</td>
+                                    <td>시범라인</td>
+                                    <td>경기 이천시 신둔면 경충대로 3321</td>
+                                    <td>2019/01/01</td>
+                                    <td>2022/01/01</td>
+                                    <td>한국 세라믹기술원의 시범라인 공장</td>
+                                    <td>
+                                        <a class="btn btn-warning" href="{% url 'factory_edit' 1 %}"><i class="fa fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>센불 유연생산 공장</td>
+                                    <td>센불</td>
+                                    <td>인천광역시 남동구 함박뫼로 402번길 38</td>
+                                    <td>2018/01/01</td>
+                                    <td>2020/01/01</td>
+                                    <td>주식회사 센불의 유연생산 공장</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning"><i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>메탈라이프 유연생산 공장</td>
+                                    <td>메탈라이프</td>
+                                    <td>경기도 안산시 단원구 강촌로 215</td>
+                                    <td>2018/01/01</td>
+                                    <td>2020/01/01</td>
+                                    <td>주식회사 메탈라이프의 유연생산 공장</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning"><i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <script src="{% static 'gui/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+    <script src="{% static 'gui/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/jszip/dist/jszip.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script>
+        {#$('#datatable-buttons').dataTable({#}
+        {#    "columnDefs": [#}
+        {#        {"orderable": false, "targets": 7}#}
+        {#    ]#}
+        {#});#}
+    </script>
+{% endblock javascripts %}
+

@@ -1,0 +1,666 @@
+{% extends "gui/layout/base_site.html" %}
+{% load static %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'gui/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'gui/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'gui/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}"
+    rel="stylesheet">
+<link href="{% static 'gui/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'gui/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'image_analysis/css/d3js.css' %}" rel="stylesheet">
+<link href="{% static 'image_analysis/css/common.css' %}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>수집영상내역</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="control-label">공장</label>
+                            <div>
+                                <select id="factory-selector" class="form-control" onchange="onChangeFactory()">
+                                    <option value="">모든</option>
+                                    <option id="factory-selector-title0" value="0">이천시범공장</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">라인명</label>
+                            <div>
+                                <select class="form-control">
+                                    <option>모두</option>
+                                    <option>유연라인</option>
+                                    <option>유연생산라인</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">공정</label>
+                            <div>
+                                <select class="form-control">
+                                    <option>모두</option>
+                                    <option>테이프케스팅</option>
+                                    <option>펀칭</option>
+                                    <option>인쇄</option>
+                                    <option>적층압착</option>
+                                    <option>적층압착</option>
+                                    <option>바스켓밀</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <label class="control-label">제품명</label>
+                            <div>
+                                <select class="form-control">
+                                    <option>모두</option>
+                                    <option>HTCC</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <label class="control-label">양품여부</label>
+                            <div>
+                                <select id="image-mode-selector" class="form-control" onchange="onChangeImageMode()">
+                                    <option>모두</option>
+                                    <option value="0">T0</option>
+                                    <option value="1">F1</option>
+                                    <option value="2">F2</option>
+                                    <option value="3">F3</option>
+                                    <option value="4">F4</option>
+                                    <option value="5">F5</option>
+                                    <option value="6">F6</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="col-sm-5">
+                                    <label class="control-label">부터</label>
+                                    <div>
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <div class="controls">
+                                                    <div class="col-md-12 xdisplay_inputx form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left"
+                                                            id="single_cal3" placeholder="First Name">
+                                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                                            aria-hidden="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="control-label">까지</label>
+                                    <div>
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <div class="controls">
+                                                    <div class="col-md-12 xdisplay_inputx form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left"
+                                                            id="single_cal2" placeholder="First Name">
+                                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                                            aria-hidden="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row chart-container">
+                        <div class="col-sm-6">
+                            <div class="row pie-chart-and-title-container">
+                                <div class="col-sm-* pie-chart-title-container">
+                                    <div class="pie-chart-title-wrapper">
+                                        <p id="pie-chart-title">모든 공장</p>
+                                    </div>
+                                </div>
+                                <div class="colsm-6 pie-chart-container">
+                                    <div class="pie-chart-wrapper">
+                                        <!-- pie chart  -->
+                                        <svg class="pie-chart" width="400" height="400">
+                                            <g transform="translate(200,200)">
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pie-chart-info-wrapper" style="display: table;">
+                                <table class="table" style="display: table-cell;vertical-align: middle;">
+                                    <thead>
+                                        <tr>
+                                            <th>코드</th>
+                                            <th>상황</th>
+                                            <th>소</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id='pie-chart-table-body'>
+                                        <!-- to render row -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th>이메지</th>
+                                    <th>영상파일명</th>
+                                    <th>공장이름</th>
+                                    <th>라인명</th>
+                                    <th>공정명</th>
+                                    <th>제품번호</th>
+                                    <th>제품명</th>
+                                    <th>생성날짜</th>
+                                    <th>양품여부class(GT)</th>
+                                    <th>기타속성</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <a href="{% url 'image_analysis:image_analysis_details' %}"><button
+                                                type="button" class="btn btn-secondary btn-sm">자세</button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary btn-sm">자세</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding: 2px; width: 80px;"><img
+                                                src="{% static 'image_analysis/image/img_Tapecasting_00024_sheet2018-08-23_F1.png' %}"
+                                                style="width: 80px; height: 50px;">
+                                        </div>
+                                    </td>
+                                    <td>img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</td>
+                                    <td>이천세라믹연구원</td>
+                                    <td>이천시범라인</td>
+                                    <td>Tapecasting</td>
+                                    <td>00001</td>
+                                    <td>HTCC</td>
+                                    <td>2019-05-17-10-59-00</td>
+                                    <td>F1</td>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary btn-sm">자세</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+{{ block.super }}
+<!-- Datatables -->
+<script src="{% static 'gui/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+<script src="{% static 'gui/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+<script src="{% static 'gui/vendors/jszip/dist/jszip.min.js' %}"></script>
+<script src="{% static 'gui/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+<script src="{% static 'gui/vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+<script src="{% static 'image_analysis/js/Chart.min.js' %}"></script>
+<script src="{% static 'image_analysis/js/d3.js' %}"></script>
+
+<script>
+    // Pie chart table defined
+    var pieChartTableData = [
+        {
+            code: "T0", status: "양품", count: "62"
+        },
+        {
+            code: "F1", status: "기포(S)", count: "38"
+        }, {
+            code: "F2", status: "기포(M)", count: "38"
+        },
+        {
+            code: "F3", status: "기포(L)", count: "10"
+        },
+        {
+            code: "F4", status: "기포(XL)", count: "15"
+        },
+        {
+            code: "F5", status: "번짐(burr)", count: "8"
+        },
+        {
+            code: "F6", status: "갈라짐(crack)", count: "6"
+        },
+    ]
+
+    // Pie chart defined
+    var data = [62, 38, 38, 10, 15, 8, 6];
+    var dataLabel = ["T0", "F1", "F2", "F3", "F4", "F5", "F6"];
+    var hovered = null
+    var selectedImageMode = null
+    var selectedFactory = null
+
+    function doUpdate() {
+        update()
+        updatePieChartTable()
+    }
+
+    function update() {
+        var { width, height } = d3.select('.pie-chart').node().getBoundingClientRect();
+        var innerRadius = 80
+        var outerRadius = 150
+        var pieGenerator = d3.pie();
+        var arcData = pieGenerator(data);
+
+
+        var arcGenerator = d3.arc()
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius)
+            .padAngle(.02)
+            .padRadius(100)
+            .cornerRadius(4);
+
+        // clear items for update
+        d3.selectAll('.pie-chart g path').remove();
+        d3.selectAll('.pie-chart g text').remove();
+        d3.selectAll('.pie-chart g .selected-arc').remove();
+
+        // assign arc
+        d3.select('.pie-chart g')
+            .selectAll('path')
+            .data(arcData)
+            .enter()
+            .append('path')
+            .attr('d', arcGenerator)
+            .style('fill', function (d, i) {
+                if (!selectedImageMode)
+                    return '#34495E'
+                return selectedImageMode.atIndex == i ? 'orange' : '#34495E'
+            })
+            .exit().remove()
+
+
+        // assign label
+        d3.select('.pie-chart g')
+            .selectAll('text')
+            .data(arcData)
+            .enter()
+            .append('text')
+            .each(function (d, i) {
+                var centroid = arcGenerator.centroid(d)
+                d3.select(this)
+                    .attr('x', centroid[0])
+                    .attr('y', centroid[1])
+                    .attr('dy', '0.33em')
+                    .attr('dx', '-0.50em')
+                    .text(dataLabel[i])
+            })
+
+        // assign center circle
+        var pieCetnerCircle = d3.select('#center-circle')
+        if (pieCetnerCircle.empty()) {
+            d3.select('.pie-chart g')
+                .append('circle')
+                .attr('id', 'center-circle')
+                .attr('r', innerRadius - 5)
+                .style('fill', '#768fa0')
+            // .on('mouseover', function (d) {  //---> adding mouse action on center circle
+            //     d3.select(this)
+            //         .style('fill', 'orange');
+            // })
+            // .on('mouseout', function (d) {
+            //     d3.select(this)
+            //         .style('fill', '#34495E');
+            // })
+        }
+
+        // assign label to center of pie
+        var pieCetnerText = d3.select('#pie-center-text')
+        if (pieCetnerText.empty()) {
+            d3.select('.pie-chart g')
+                .append('text')
+                .attr('id', 'pie-center-text')
+                .attr('dy', '0.33em')
+                .text('177')
+        }
+
+        // assign selected arc
+        var selectedArcGenerator = d3.arc()
+            .innerRadius(outerRadius + 2)
+            .outerRadius(outerRadius + 10)
+            .padAngle(.02)
+            .padRadius(100)
+            .cornerRadius(2);
+
+        var selectedArc = d3.select('.pie-chart g')
+            .selectAll('.selected-arc')
+            .data(arcData)
+        selectedArc.enter()
+            .append('path')
+            .merge(selectedArc)
+            .attr('class', 'selected-arc')
+            .attr('d', selectedArcGenerator)
+            .style('fill', 'orange')
+            .style('opacity', function (d, i) {
+                if (!selectedImageMode)
+                    return 0
+                return selectedImageMode.atIndex == i ? 1 : 0
+            }).exit().remove();
+
+    }
+
+    function updatePieChartTable() {
+        var tableBody = document.getElementById("pie-chart-table-body");
+        var rowHTML = ''
+        i = 0
+        totalCount = 0
+        while (pieChartTableData.length > i) {
+            rowHTML += "<tr" + (selectedImageMode && selectedImageMode.atIndex == i ? " style='background-color: #34495E; color: white'" : '') + ">"
+            rowHTML += "<td>" + pieChartTableData[i].code + "</td>"
+            rowHTML += "<td>" + pieChartTableData[i].status + "</td>"
+            rowHTML += "<td>" + pieChartTableData[i].count + "</td>"
+            rowHTML += "</tr>"
+            totalCount += parseInt(pieChartTableData[i].count)
+            i++
+        }
+
+        rowHTML += "<tr><td>모두</td><td></td><td>" + totalCount + "</td></tr>"
+
+        tableBody.innerHTML = rowHTML
+    }
+
+    doUpdate()
+
+    function onChangeImageMode() {
+        selectedImageMode = { atIndex: parseInt(document.getElementById("image-mode-selector").value) }
+        doUpdate()
+    }
+
+    function onChangeFactory() {
+        var index = document.getElementById("factory-selector").value
+
+        selectedFactory = {
+            atIndex: parseInt(index),
+            title: index ? document.getElementById("factory-selector-title" + index).innerText : '모든 공장'
+        }
+        console.log(selectedFactory);
+
+        // Update chart title
+        document.getElementById("pie-chart-title").innerText = selectedFactory.title
+
+        doUpdate()
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#datatable').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "pageLength": 10,
+            "bFilter": false,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+    });
+</script>
+{% endblock javascripts %}

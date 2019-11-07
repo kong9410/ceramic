@@ -1,0 +1,136 @@
+{% extends "gui/layout/base_site.html" %}
+
+{% block title %} 공장관리 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>공장관리</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>공장추가</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form id="form" data-parsley-validate class="form-horizontal form-label-left">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seq">순번
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <input type="number" id="seq" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">공장이름
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <input type="text" id="last-name" name="name" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nickname" class="control-label col-md-3 col-sm-3 col-xs-12">공장별명</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <input id="nickname" class="form-control col-md-7 col-xs-12" type="text"
+                                               name="nickname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="control-label col-md-3 col-sm-3 col-xs-12">주소</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <input id="address" class="form-control col-md-7 col-xs-12" type="text"
+                                               name="address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">가동시작일<span
+                                            class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <div class="controls">
+                                                    <div class="form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left"
+                                                               id="start-date" placeholder="가동시작일" required="required">
+                                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                                              aria-hidden="true" style="left: 0;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">가동종료일<span
+                                            class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <div class="controls">
+                                                    <div class="form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left"
+                                                               id="end-date" placeholder="가동종료일" required="required">
+                                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                                              aria-hidden="true" style="left: 0;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address"
+                                           class="control-label col-md-3 col-sm-3 col-xs-12">설명</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 field">
+                                        <input id="address" class="form-control col-md-7 col-xs-12" type="text"
+                                               name="address">
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <a class="btn btn-primary" href="{% url 'factory' %}">Cancel</a>
+                                        <button id="btn-reset" class="btn btn-primary" type="reset">Reset</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block javascripts %}
+    {{ block.super }}
+    <script>
+        $("#start-date").daterangepicker({
+            singleDatePicker: true,
+            singleClasses: "picker_2"
+        });
+        $("#end-date").daterangepicker({
+            singleDatePicker: true,
+            singleClasses: "picker_2"
+        });
+    </script>
+{% endblock javascripts %}
+

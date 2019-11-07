@@ -1,0 +1,34 @@
+<div class="row">
+    <form method="post" action="{% url 'process_analysis:heatmap_correlation_ajax' %}" id="heatmap_correlation_ajax">
+        {% csrf_token %}
+        <div class="col-lg-2 col-sm-4">
+            <label for="factory">Factory:</label>
+            <select id="factory" name="factory" class="form-control outlier_batch_opt" required>
+                {% for opt in factories %}
+                    <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="line">Line:</label>
+            <select id="line" name="line" class="form-control outlier_batch_opt" required>
+                {% for opt in lines %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Process:</label>
+            <select id="process" name="process" class="form-control outlier_batch_opt" required>
+                {% for opt in processes %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+</div>
+
+
+

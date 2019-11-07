@@ -1,0 +1,60 @@
+{% extends "gui/layout/base_site.html" %}
+{%  load static %}
+{% block title %} Outlier & noise data detection {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static 'process_analysis/c3js/c3.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'process_analysis/c3js/d3-tip.css' %}" rel="stylesheet"/>
+{#    <link href="/static/gui/c3js/nv.d3.min.css" rel="stylesheet"/>#}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Outlier & noise data detection</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Batch analysis</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            {% include "process_analysis/inc_outlier_option.html" %}
+                            <div id="waitingResult"> <i class="fa fa-spin fa-refresh fa-2x" aria-hidden="true"></i> </div>
+                        </div>
+
+                        <div class="x_title">
+                            <h2>Outliers</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" id="x_content_outliers">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+{{ block.super }}
+
+
+{#<script src="/static/gui/c3js/nv.d3.min.js"></script>#}
+
+<script src="{% static 'process_analysis/c3js/d3.v5.min.js'%}"></script>
+<script src="{% static 'process_analysis/c3js/c3.min.js'%}"></script>
+<script src="{% static 'process_analysis/c3js/d3-tip.min.js'%}"></script>
+<script src="{% static 'process_analysis/c3js/boxplot.js'%}"></script>
+<script src="{% static 'process_analysis/c3js/corellation.js'%}"></script>
+<script src="{% static 'process_analysis/pages/outlier_detect.js'%}"></script>
+
+{% endblock javascripts %}
+

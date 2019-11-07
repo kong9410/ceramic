@@ -1,0 +1,89 @@
+<div class="left_col scroll-view">
+    <div class="navbar nav_title" style="border: 0;">
+        <a href="{% url 'index' %}" class="site_title"><i>C</i> <span>Ceramic</span></a>
+    </div>
+    <div class="clearfix"></div>
+    <br/>
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+            <h3>모니터링</h3>
+            <ul class="nav side-menu">
+                <li><a><i class="fa fa-desktop"></i> 종합현황 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'sample' %}">Sub menu</a></li>
+                    </ul>
+                </li>
+                <li><a href="{%  url 'index' %}"><i class="fa fa-bar-chart-o"></i>정보시각화</a>
+                </li>
+            </ul>
+        </div>
+        <div class="menu_section">
+            <h3>분석</h3>
+            <ul class="nav side-menu">
+                <li><a><i class="fa fa-pie-chart"></i> 생산분석 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'sample' %}">Sub menu</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-area-chart"></i> 설비분석 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'sample' %}">Sub menu</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-line-chart"></i> 제품품질분석 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'sample' %}">Sub menu</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart"></i> 공정분석 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="#">핵심인자추출</a></li>
+                        <li><a href="#">상관관계분석</a></li>
+                        <li><a href="#">분류</a></li>
+                        <li><a href="#">불량원인도출</a></li>
+                        <li><a href="#">공정인자분석</a></li>
+                        <li><a href="{% url 'process_analysis:outlier_batch' %}">공정 데이터 품질 분석</a></li>
+                        <li><a href="{% url 'process_analysis:outlier_correlation' %}">공정 데이터 상관성 분석</a></li>
+                        <li><a href="{% url 'process_analysis:heatmap_correlation' %}">상관관계 분석 - 1</a></li>
+                        <li><a href="#">상관관계 분석 - 2</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-image"></i> 공정영상분석 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'image_analysis:index' %}">수집영상내역</a></li>
+                        <li><a href="{% url 'image_analysis:image_classification' %}">영상불량분석내역</a></li>
+                        <li><a href="{% url 'image_analysis:image_object_analysis' %}">영상불량분류</a></li>
+                        <li><a href="{% url 'image_analysis:image_evaluation' %}">학습데이터내역</a></li>
+                        <li><a href="{% url 'image_analysis:model_training' %}">학습모델적용</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="menu_section">
+            <h3>설정</h3>
+            <ul class="nav side-menu">
+                <li><a><i class="fa fa-gear"></i> 관리시스템 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'factory' %}">공장관리</a></li>
+                        <li><a href="#">제품관리</a></li>
+                        <li><a href="#">라인관리</a></li>
+                        <li><a href="#">공정관리</a></li>
+                        <li><a href="#">공정관리</a></li>
+                        <li><a href="#">환경설정</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /sidebar menu -->
+
+    <!-- /menu footer buttons -->
+    <div class="sidebar-footer hidden-small">
+        <a data-toggle="tooltip" data-placement="top" title="Logout" href="#">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+        </a>
+    </div>
+    <!-- /menu footer buttons -->
+</div>

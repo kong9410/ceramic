@@ -1,0 +1,173 @@
+{% extends "gui/layout/base_site.html" %}
+{% load static %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'image_analysis/css/common.css' %}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <a href="{% url 'image_analysis:index' %}"><button type="button" class="btn btn-secondary btn-sm"><i
+                  class="fa fa-arrow-left back-btn-icon"></i> 수집영상내역</button>
+            </a>
+          </div>
+          <div class="x_content">
+
+            <div class="row">
+              <div class="col-md-8" style="background-color: #1b1b1b; padding: 2px; border-radius: 2px;">
+                <div class="product-image-container"
+                  style="display: flex; border-width: 1px; border-color: white; border-style: solid; padding: 10px; border-radius: 2px;">
+                  <img src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1.png' %}"
+                    style="margin: auto; max-width: 500px; max-height: 500px; border-width: 1px; border-color: white; border-style: solid;">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="image-info-container" style="padding: 5px;">
+                  <section class="panel">
+
+                    <div class="x_title">
+                      <h2>이메지 정보</h2>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                      <h4 class="green">img_Tapecasting_00001_HTCC2019-05-17-10-59-00_F1</h4>
+                      <br />
+                      <div class="project_detail">
+                        <p class="title">공장이름</p>
+                        <p>이천세라믹연구원</p>
+                        <p class="title">라인명</p>
+                        <p>이천시범라인</p>
+                        <p class="title">공정명</p>
+                        <p>Tapecasting</p>
+                        <p class="title">제품번호</p>
+                        <p>00001</p>
+                        <p class="title">제품명</p>
+                        <p>HTCC</p>
+                        <p class="title">생성날짜</p>
+                        <p>2019-05-17-10-59-00</p>
+                        <p class="title">양품여부</p>
+                        <p>F1</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="section-separator-container">
+              <hr class="section-separator-line" />
+              <div class="section-separator-title">
+                이메지 상황
+              </div>
+            </div>
+            <div>
+              <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>영상파일명</th>
+                    <th>X쪽</th>
+                    <th>Y쪽</th>
+                    <th>폭</th>
+                    <th>높이</th>
+                    <th>상세불량정보</th>
+                    <th>적용된 모델</th>
+                    <th>날짜</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>001</td>
+                    <td>F1: 기포(S)</td>
+                    <td>100</td>
+                    <td>33</td>
+                    <td>50</td>
+                    <td>50</td>
+                    <td>
+                      <div style="padding: 2px; width: 80px;"><img
+                          src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1_defect_01.jpg' %}"
+                          style="width: 50px; height: 50px;">
+                      </div>
+                    </td>
+                    <td>테이프케스팅_64_2_10_191028_model</td>
+                    <td>2019-05-17-10-59-00</td>
+                  </tr>
+                  <tr>
+                    <td>001</td>
+                    <td>F1: 기포(S)</td>
+                    <td>100</td>
+                    <td>33</td>
+                    <td>50</td>
+                    <td>50</td>
+                    <td>
+                      <div style="padding: 2px; width: 80px;"><img
+                          src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1_defect_01.jpg' %}"
+                          style="width: 50px; height: 50px;">
+                      </div>
+                    </td>
+                    <td>테이프케스팅_64_2_10_191028_model</td>
+                    <td>2019-05-17-10-59-00</td>
+                  </tr>
+                  <tr>
+                    <td>001</td>
+                    <td>F1: 기포(S)</td>
+                    <td>100</td>
+                    <td>33</td>
+                    <td>50</td>
+                    <td>50</td>
+                    <td>
+                      <div style="padding: 2px; width: 80px;"><img
+                          src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1_defect_01.jpg' %}"
+                          style="width: 50px; height: 50px;">
+                      </div>
+                    </td>
+                    <td>테이프케스팅_64_2_10_191028_model</td>
+                    <td>2019-05-17-10-59-00</td>
+                  </tr>
+                  <tr>
+                    <td>001</td>
+                    <td>F1: 기포(S)</td>
+                    <td>100</td>
+                    <td>33</td>
+                    <td>50</td>
+                    <td>50</td>
+                    <td>
+                      <div style="padding: 2px; width: 80px;"><img
+                          src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1_defect_01.jpg' %}"
+                          style="width: 50px; height: 50px;">
+                      </div>
+                    </td>
+                    <td>테이프케스팅_64_2_10_191028_model</td>
+                    <td>2019-05-17-10-59-00</td>
+                  </tr>
+                  <tr>
+                    <td>001</td>
+                    <td>F1: 기포(S)</td>
+                    <td>100</td>
+                    <td>33</td>
+                    <td>50</td>
+                    <td>50</td>
+                    <td>
+                      <div style="padding: 2px; width: 80px;"><img
+                          src="{% static 'image_analysis/image/img_Tapecasting_00098_sheet2018-11-09_F1_defect_01.jpg' %}"
+                          style="width: 50px; height: 50px;">
+                      </div>
+                    </td>
+                    <td>테이프케스팅_64_2_10_191028_model</td>
+                    <td>2019-05-17-10-59-00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

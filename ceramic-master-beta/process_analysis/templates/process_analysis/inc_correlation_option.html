@@ -1,0 +1,58 @@
+<div class="row">
+    <form method="post" action="{% url 'process_analysis:outlier_correlation_ajax' %}" id="outlier_correlation_ajax">
+        {% csrf_token %}
+        <div class="col-lg-2 col-sm-4">
+            <label for="factory">Factory:</label>
+            <select id="factory" name="factory" class="form-control outlier_batch_opt" required>
+                {% for opt in factories %}
+                    <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="line">Line:</label>
+            <select id="line" name="line" class="form-control outlier_batch_opt" required>
+                {% for opt in lines %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Process:</label>
+            <select id="process" name="process" class="form-control outlier_batch_opt" required>
+                {% for opt in processes %}
+                <option value="{{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Mode:</label>
+            <select id="mode" name="mode" class="form-control outlier_batch_opt" required>
+                {% for opt in modes %}
+                <option value="{{ forloop.counter0 }}={{opt}}">{{opt}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">X:</label>
+            <select id="mode" name="mode" class="form-control outlier_batch_opt" required>
+                <option value="">{{opt}}</option>
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-sm-4">
+            <label for="process">Y:</label>
+            <select id="mode" name="mode" class="form-control outlier_batch_opt" required>
+                <option value="">{{opt}}</option>
+            </select>
+        </div>
+    </form>
+
+</div>
+
+
+

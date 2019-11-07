@@ -1,0 +1,164 @@
+{% extends "gui/layout/base_site.html" %}
+{% load static %}
+{% block title %} Dashboard 1 {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <!-- top tiles -->
+        <div class="row tile_count">
+            <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> 총생산량</span>
+                <div class="count">{{ header.total }}</div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-clock-o"></i> 양품수</span>
+                <div class="count">{{ header.ok_product }}</div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> 불량수</span>
+                <div class="count">{{ header.ng_product }}</div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> 불량율</span>
+                <div class="count">{{ header.percentage_of_ng_product }}</div>
+            </div>
+        </div>
+        <!-- /top tiles -->
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard_graph">
+
+                    <div class="row x_title">
+                        <div class="col-md-6">
+                            <h3>NG Images</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="reportrange" class="pull-right"
+                                 style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
+                        <div class="x_title">
+                            <h2>Statistics</h2>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
+                            <table class="" style="width:100%">
+                                <tr>
+                                    <th style="width:37%;">
+                                        <p>Graph</p>
+                                    </th>
+                                    <th>
+                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                            <p class="">Status</p>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                            <p class="">Count</p>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <canvas class="canvasDoughnut" height="140" width="140"
+                                                style="margin: 15px 10px 10px 0"></canvas>
+                                    </td>
+                                    <td>
+                                        <table class="tile_info">
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square blue"></i>일반(normal) </p>
+                                                </td>
+                                                <td>{{ list_images.0 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square green"></i>기포(S) </p>
+                                                </td>
+                                                <td>{{ list_images.1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square purple"></i>기포(S) </p>
+                                                </td>
+                                                <td>{{ list_images.2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square aero"></i>기포(S) </p>
+                                                </td>
+                                                <td>{{ list_images.3 }}</td>
+                                            </tr>
+                                             <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square dark"></i>기포(XL) </p>
+                                                </td>
+                                                <td>{{ list_images.4 }}</td>
+                                            </tr>
+                                             <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square orange"></i>번짐(burr)</p>
+                                                </td>
+                                                <td>{{ list_images.5 }}</td>
+                                            </tr>
+                                             <tr>
+                                                <td>
+                                                    <p><i class="fa fa-square red"></i>갈라짐(crack)</p>
+                                                </td>
+                                                <td>{{ list_images.6 }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <!-- Chart.js -->
+    <script src="{% static 'gui/vendors/Chart.js/dist/Chart.min.js' %}"></script>
+    <!-- gauge.js -->
+    <script src="{% static 'gui/vendors/gauge.js/dist/gauge.min.js' %}"></script>
+    <!-- Skycons -->
+    <script src="{% static 'gui/vendors/skycons/skycons.js' %}"></script>
+    <!-- Flot -->
+    <script src="{% static 'gui/vendors/Flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'gui/vendors/Flot/jquery.flot.pie.js' %}"></script>
+    <script src="{% static 'gui/vendors/Flot/jquery.flot.time.js' %}"></script>
+    <script src="{% static 'gui/vendors/Flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'gui/vendors/Flot/jquery.flot.resize.js' %}"></script>
+    <!-- Flot plugins -->
+    <script src="{% static 'gui/vendors/flot.orderbars/js/jquery.flot.orderBars.js' %}"></script>
+    <script src="{% static 'gui/vendors/flot-spline/js/jquery.flot.spline.min.js' %}"></script>
+    <script src="{% static 'gui/vendors/flot.curvedlines/curvedLines.js' %}"></script>
+    <!-- DateJS -->
+    <script src="{% static 'gui/vendors/DateJS/build/date.js' %}"></script>
+    <!-- JQVMap -->
+    <script src="{% static 'gui/vendors/jqvmap/dist/jquery.vmap.js' %}"></script>
+    <script src="{% static 'gui/vendors/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+    <script src="{% static 'gui/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js' %}"></script>
+{% endblock javascripts %}

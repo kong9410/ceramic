@@ -1,0 +1,18 @@
+.pie-chart g path {
+  fill: #34495E;
+  stroke: white;
+}
+
+#pie-center-text {
+  font-weight: bold;
+  fill: white;
+  font-size: 20px;
+  text-anchor: middle;
+}
+
+.pie-chart g text {
+  font-weight: bold;
+  fill: white;
+  font-size: 12px;
+}
+
